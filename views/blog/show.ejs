@@ -1,0 +1,18 @@
+<% include ../partials/header %>
+
+<div class="ui container">
+    <!-- Blog post -->
+    <div class="ui placeholder segment">
+        <h1 class="ui center aligned icon header"><%= post.header %></h1>
+        <h3>Автор: <%= post.author %></h3>
+        <p><%= post.description %></p>
+        <p><strong><%= moment(post.date).locale("ru").fromNow() %></strong></p>
+        <div class="backbutton">
+            <a class="ui green basic button" href="/blog">Назад</a>
+        </div>
+    </div>
+    <!-- end Blog post -->
+    
+</div>
+
+<% include ../partials/footer %>

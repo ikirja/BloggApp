@@ -1,0 +1,66 @@
+<% include ../partials/header %>
+
+<div class="ui container">
+    <div class="ui placeholder segment center aligned">
+        <h1 class="ui center aligned icon header">
+            <i class="blogger circular icon"></i>
+            <p>Блог</p>
+        </h1>
+        <p>
+            Рассказываю о разработке веб-приложений и различных ресурсов.<br> JavaScript, PHP, Node.JS - что под руку попадётся, о том и напишу.
+        </p>
+        <button class="ui green basic button modalbutton">Добавить пост</button>
+        <div class="ui modal post">
+            <span class="closemodal"><i class="large close icon"></i></span>
+            <form class="ui form" action="/blog" method="POST">
+                <div class="field">
+                    <h1>Новый пост</h1>
+                </div>
+                <div class="field">
+                    <input type="text" name="post[header]" placeholder="Заголовок" required>
+                </div>
+                <div class="field">
+                    <input type="text" name="post[author]" placeholder="Ваше имя" required>
+                </div>
+                <div class="field">
+                    <textarea name="post[description]" placeholder="Текст" required></textarea>
+                </div>
+                <div class="field">
+                    <button class="ui basic violet button">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Blog grid -->
+    <div class="ui stackable two column grid">
+        <% posts.sort(myFunctions.sortDescDate) %>
+        <% var i = 0 %>
+        <% posts.forEach(function(post) { %>
+        <div class="column">
+            <a class="postlink" href="/blog/<%= post._id %>">
+            <div class="ui segment">
+                <h1 class="ui header"><%= post.header %></h1>
+                <h3>Автор: <%= post.author %></h3>
+                <p><%= post.description.substring(0, 200) + " ..." %></p>
+                <p><strong><%= moment(post.date).locale("ru").fromNow() %></strong></p>
+            </div>
+            </a>
+        </div>
+        <% i++ %>
+        <% }); %>
+        <!-- Dummy info
+        <div class="column">
+            <div class="ui segment">
+                <h1 class="ui header">BloggApp, разработка началась!</h1>
+                <p>Обучение идёт у меня и днём, и ночью. И мне всё больше нравится Node.JS! Все прелести и минусы NoSQL (MongoDB) я ещё не до конца понял, но работаю и в этом направлении. Начал работать над мини веб приложением, с базовой функциональностью блога и галереи. Как раз идеально для старта!</p>
+                <p>6 Октября 2018</p>
+            </div>
+        </div>
+        -->
+    </div>
+    <!-- end Blog grid -->
+    
+</div>
+
+<% include ../partials/footer %>
