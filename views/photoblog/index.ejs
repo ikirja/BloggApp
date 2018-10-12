@@ -10,21 +10,55 @@
             Периодически балуюсь кнопконажимательством.<br> Вся моя безвкусица чуть ниже. Листай, не стесняйся.
         </p>
         <button class="ui green basic button modalbutton">Добавить фото</button>
+        <div class="ui modal">
+            <span class="closemodal"><i class="large close icon"></i></span>
+            <form class="ui form" action="/photoblog" method="POST">
+                <div class="field">
+                    <h1>Новый Фото пост</h1>
+                </div>
+                <div class="field">
+                    <input type="text" name="photo[name]" placeholder="Название фото" required>
+                </div>
+                <div class="field">
+                    <input type="text" name="photo[author]" placeholder="Ваше имя" required>
+                </div>
+                <div class="field">
+                    <input type="text" name="photo[url]" placeholder="Ссылка на фото" required>
+                </div>
+                <div class="field">
+                    <textarea name="photo[description]" placeholder="Описание фото" required></textarea>
+                </div>
+                <div class="field">
+                    <button class="ui basic violet button">Добавить</button>
+                </div>
+            </form>
+        </div>
     </div>
     
     <!-- Photos grid -->
     <div class="ui piled segment">
         <div class="ui stackable doubling four column grid">
+            <% photos.sort(myFunctions.sortDescDate) %>
+            <% var i = 0 %>
+            <% photos.forEach(function(photo){ %>
             <div class="column">
+                <a class="postlink" href="/photoblog/<%= photo._id %>">
                 <div class="ui segment photo">
                     <div class="ui fluid image">
-                        <img src="https://preview.ibb.co/gzc2mz/IMG_2027.jpg">
+                        <img src="<%= photo.url %>">
                     </div>
-                    <p>ВДНХ, отель "Космос", вид с 23 этажа.</p>
-                    <p>15 Сентября 2018</p>
+                    <div class="photodata">
+                        <%= photo.name %><br>
+                        Автор: <%= photo.author %><br>
+                        <strong><%= moment(photo.date).locale("ru").fromNow() %></strong>
+                    </div>
                 </div>
+                </a>
             </div>
+            <% i++ %>
+            <% }); %>
             
+            <!-- Dummy Photo post
             <div class="column">
                 <div class="ui segment photo">
                     <div class="ui fluid image">
@@ -34,26 +68,7 @@
                     <p>15 Сентября 2018</p>
                 </div>
             </div>
-            
-            <div class="column">
-                <div class="ui segment photo">
-                    <div class="ui fluid image">
-                        <img src="https://preview.ibb.co/gzc2mz/IMG_2027.jpg">
-                    </div>
-                    <p>ВДНХ, отель "Космос", вид с 23 этажа.</p>
-                    <p>15 Сентября 2018</p>
-                </div>
-            </div>
-            
-            <div class="column">
-                <div class="ui segment photo">
-                    <div class="ui fluid image">
-                        <img src="https://preview.ibb.co/gzc2mz/IMG_2027.jpg">
-                    </div>
-                    <p>ВДНХ, отель "Космос", вид с 23 этажа.</p>
-                    <p>15 Сентября 2018</p>
-                </div>
-            </div>
+            -->
         </div>
     </div>
     <!-- end Photos grid -->

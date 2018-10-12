@@ -41,6 +41,7 @@ var photoSchema = new mongoose.Schema({
     name: String,
     author: String,
     url: String,
+    description: String,
     date: {
         type: Date,
         default: Date.now
@@ -92,7 +93,33 @@ app.get("/blog/:id", function(req, res){
 
 // Photo Blog Routes
 app.get("/photoblog", function(req, res){
-    res.render("photoblog/index");
+    Photo.find({}, function(err, allPhotos){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("photoblog/index", { photos: allPhotos });
+        }
+    });
+});
+
+app.post("/photoblog", function(req, res){
+    Photo.create(req.body.photo, function(err, newPhoto){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/photoblog");
+        }
+    });
+});
+
+app.get("/photoblog/:id", function(req, res){
+    Photo.findById(req.params.id, function(err, photo){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("photoblog/show", { photo: photo });
+        }
+    });
 });
 
 // Server

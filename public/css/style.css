@@ -67,6 +67,10 @@ a.postlink:hover {
     padding: 10px;
 }
 
+.photodata {
+    padding: 20px;
+}
+
 /* Footer */
 .footer {
     padding-bottom: 25px;
