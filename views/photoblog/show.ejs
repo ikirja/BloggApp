@@ -14,12 +14,18 @@
                 <h3>Автор: <%= photo.author %></h3>
                 <p><%= photo.description %></p>
                 <p><strong><%= moment(photo.date).locale("ru").fromNow() %></strong></p>
-                <div class="backbutton">
-                    <a class="ui green basic button" href="/photoblog">Назад</a>
-                    <a class="ui yellow basic button" href="/photoblog/<%= photo._id %>/edit">Редактировать</a>
-                    <form action="/photoblog/<%= photo._id %>?_method=DELETE" method="POST"> 
-                        <button class="ui red basic button">Удалить</button>
-                    </form>
+                <div class="ui form backbutton">
+                    <div class="field">
+                        <a class="ui green basic button" href="/photoblog">Назад</a>
+                    </div>
+                    <div class="field">
+                        <a class="ui mini yellow basic button" href="/photoblog/<%= photo._id %>/edit">Редактировать</a>
+                    </div>
+                    <div class="field">
+                        <form action="/photoblog/<%= photo._id %>?_method=DELETE" method="POST"> 
+                            <button class="ui mini red basic button">Удалить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
