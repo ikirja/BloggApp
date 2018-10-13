@@ -1,26 +1,25 @@
 <div class="ui container center aligned footer">
-    <p>BloggApp, ver. 0.2.0. Разработано: Кирилл Макеев &copy; 2018</p>
+    <p>BloggApp, ver. 0.3.0. Разработано: Кирилл Макеев &copy; 2018</p>
 </div>
 
 <script type="text/javascript">
-$("body").animate({
-    opacity: 1.0,
-    marginRight: 0
-}, 500, function(){
-    $(".column").each(function(i){
-        $(this).delay(100 * i).queue(function(nxt) {
-    		$(this).animate({
-    		    opacity: 1.0
-    		}, 1000, function(){});
-    		nxt();
-        })
+// Animation on load for all Columns using Velocity JS
+$(".column").each(function(i){
+    $(this).delay( 200 * i ).queue(function(next){
+        $(this).velocity({
+            properties: { opacity: 1 },
+            options: { duration: 1000 }
+        });
+        next();
     });
 });
 
+// Modal (adding post and photo post)
 $(".modalbutton").click(function(){
     $(".ui.modal").modal("show");
 });
 
+// Close X button
 $(".closemodal").click(function(){
     $(".ui.modal").modal("hide");
 });

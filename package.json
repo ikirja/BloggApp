@@ -1,6 +1,6 @@
 {
   "name": "bloggapp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Nice blog app on node.js and express. There's 3 main parts: 1) landing (index) page, 2) photo blog, 3) regular blog.",
   "main": "app.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "method-override": "^3.0.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.1"
   }

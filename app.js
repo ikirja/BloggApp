@@ -5,6 +5,7 @@ var express = require("express");
 var app = express();
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+var methodOverride = require("method-override");
 
 // Connect to DB
 mongoose.connect("mongodb://localhost:27017/BloggApp", { useNewUrlParser: true });
@@ -15,6 +16,7 @@ app.set("view engine", "ejs");
 // Additional settings
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 // Moment JS
 app.locals.moment = require("moment");
@@ -50,16 +52,17 @@ var photoSchema = new mongoose.Schema({
 
 var Photo = mongoose.model("Photo", photoSchema);
 
-// ===
+// ======
 // ROUTES
-// ===
+// ======
 
-// Landing Page Routes
+// Landing Page Route
 app.get("/", function(req, res){
     res.render("index");
 });
 
 // Blog Routes
+// Blog index route
 app.get("/blog", function(req, res){
     Post.find({}, function(err, allPosts){
         if(err){
@@ -70,6 +73,7 @@ app.get("/blog", function(req, res){
     });
 });
 
+// Blog create route
 app.post("/blog", function(req, res){
     Post.create(req.body.post, function(err, newPost){
         if(err){
@@ -81,6 +85,7 @@ app.post("/blog", function(req, res){
     });
 });
 
+// Blog show route
 app.get("/blog/:id", function(req, res){
     Post.findById(req.params.id, function(err, post){
         if(err){
@@ -91,7 +96,41 @@ app.get("/blog/:id", function(req, res){
     });
 });
 
+// Blog edit route
+app.get("/blog/:id/edit", function(req, res){
+    Post.findById(req.params.id, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("blog/edit", { post: post });
+        }
+    });
+});
+
+// Blog update route
+app.put("/blog/:id", function(req, res){
+    Post.findByIdAndUpdate(req.params.id, { $set: req.body.post }, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/blog/" + post._id);
+        }
+    });
+});
+
+// Blog destroy route
+app.delete("/blog/:id", function(req, res){
+    Post.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/blog");
+        }
+    });
+});
+
 // Photo Blog Routes
+// Photo blog index route
 app.get("/photoblog", function(req, res){
     Photo.find({}, function(err, allPhotos){
         if(err){
@@ -102,6 +141,7 @@ app.get("/photoblog", function(req, res){
     });
 });
 
+// Photo Blog create route
 app.post("/photoblog", function(req, res){
     Photo.create(req.body.photo, function(err, newPhoto){
         if(err){
@@ -112,6 +152,7 @@ app.post("/photoblog", function(req, res){
     });
 });
 
+// Photo Blog show route
 app.get("/photoblog/:id", function(req, res){
     Photo.findById(req.params.id, function(err, photo){
         if(err){
@@ -121,6 +162,12 @@ app.get("/photoblog/:id", function(req, res){
         }
     });
 });
+
+// Photo Blog edit route
+
+// Photo Blog update route
+
+// Photo Blog destroy route
 
 // Server
 app.listen(process.env.PORT, process.env.IP, function(){

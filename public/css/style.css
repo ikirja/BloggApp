@@ -2,17 +2,12 @@
 #welcome {
     padding-left: 10px;
 }
-
 .top .icon {
     font-size: 25px;
     padding-left: 10px;
 }
 
 /* Main Styles */
-body {
-    opacity: 0;
-    margin-right: 10px;
-}
 .container {
     margin-top: 20px;
 }
@@ -27,23 +22,22 @@ body {
     box-shadow: 0px 0px 30px 0.2px lightgray;
     cursor: pointer;
 }
-
 .close.icon {
     color: #999;
     float: right;
     cursor: pointer;
 }
-
 a.postlink {
     color: #000;
 }
-
 a.postlink:hover {
     color: #000;
 }
-
 .backbutton {
     text-align: center;
+}
+.backbutton form {
+    display: inline;
 }
 
 /* Landing Page */
@@ -62,11 +56,9 @@ a.postlink:hover {
 .ui.segment.photo {
     padding: 0;
 }
-
 .ui.segment.photo p {
     padding: 10px;
 }
-
 .photodata {
     padding: 20px;
 }
