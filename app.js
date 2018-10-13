@@ -164,12 +164,41 @@ app.get("/photoblog/:id", function(req, res){
 });
 
 // Photo Blog edit route
+app.get("/photoblog/:id/edit", function(req, res){
+    Photo.findById(req.params.id, function(err, photo){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("photoblog/edit", { photo: photo });
+        }
+    });
+});
 
 // Photo Blog update route
+app.put("/photoblog/:id", function(req, res){
+    Photo.findByIdAndUpdate(req.params.id, { $set: req.body.photo }, function(err, photo){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/photoblog/" + photo._id);
+        }
+    });
+});
 
 // Photo Blog destroy route
+app.delete("/photoblog/:id", function(req, res){
+    Photo.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/photoblog/");
+        }
+    });
+});
 
-// Server
+//=======
+// SERVER
+//=======
 app.listen(process.env.PORT, process.env.IP, function(){
     console.log("BloggApp server has started.");
 });
