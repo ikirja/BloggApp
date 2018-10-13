@@ -4,33 +4,67 @@
     <!-- Photo Blog post -->
     <div class="ui placeholder segment">
         <div class="ui two column grid">
-            <div class="column">
+            <div class="six wide column">
                 <div class="ui image">
                     <img src="<%= photo.url %>">
                 </div>
             </div>
-            <div class="column">
+            <div class="ten wide column">
                 <h1 class="ui header"><%= photo.name %></h1>
                 <h3>Автор: <%= photo.author %></h3>
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="field">
+                            <a class="ui mini yellow button" href="/photoblog/<%= photo._id %>/edit"><i class="icon edit"></i>Редактировать</a>
+                        </div>
+                        <div class="field">
+                            <form action="/photoblog/<%= photo._id %>?_method=DELETE" method="POST"> 
+                                <button class="ui mini red button"><i class="icon trash alternate"></i>Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <p><%= photo.description %></p>
                 <p><strong><%= moment(photo.date).locale("ru").fromNow() %></strong></p>
-                <div class="ui form backbutton">
-                    <div class="field">
-                        <a class="ui green basic button" href="/photoblog">Назад</a>
-                    </div>
-                    <div class="field">
-                        <a class="ui mini yellow basic button" href="/photoblog/<%= photo._id %>/edit">Редактировать</a>
-                    </div>
-                    <div class="field">
-                        <form action="/photoblog/<%= photo._id %>?_method=DELETE" method="POST"> 
-                            <button class="ui mini red basic button">Удалить</button>
-                        </form>
-                    </div>
+                <div class="backbutton">
+                    <a class="ui blue button" href="/photoblog"><i class="icon undo"></i>Назад</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- end Photo Blog post -->
+    <!-- Blog post comments -->
+    <a class="ui right floated green button" href=""><i class="icon edit"></i>Добавить комментарий</a>
+    <div class="ui hidden divider"></div>
+    <div class="ui comments">
+        <h3 class="ui dividing header">Комментарии</h3>
+        <div class="comment">
+            <div class="content">
+                <span class="author">Автор</span>
+                <div class="metadata">
+                    <span class="date">Дата</span>
+                </div>
+                <div class="text">
+                    Текст комментария
+                </div>
+                <div class="ui form">
+                    <div class="fields">
+                        <div class="field">
+                            <form action="" method="GET">
+                                <button class="ui mini yellow basic button"><i class="icon edit"></i>Редактировать</a>
+                            </form>
+                        </div>
+                        <div class="field">
+                            <form action="?_method=DELETE" method="POST">
+                                <button class="ui mini red basic button"><i class="icon trash alternate"></i>Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end Blog post comments -->
 </div>
 
 <% include ../partials/footer %>

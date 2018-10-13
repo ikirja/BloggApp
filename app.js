@@ -21,10 +21,18 @@ app.use(methodOverride("_method"));
 // Moment JS
 app.locals.moment = require("moment");
 
-//Additional JS files and globals
+// Additional JS files and globals
 global.myFunctions = require("./public/js/functions");
 
 // Models
+// User
+var userSchema = new mongoose.Schema({
+    username: String,
+    password: String
+});
+
+var User = mongoose.model("User", userSchema);
+
 // Post
 var postSchema = new mongoose.Schema({
     header: String,
@@ -33,12 +41,18 @@ var postSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 var Post = mongoose.model("Post", postSchema);
 
-//Photo
+// Photo
 var photoSchema = new mongoose.Schema({
     name: String,
     author: String,
@@ -47,10 +61,28 @@ var photoSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 var Photo = mongoose.model("Photo", photoSchema);
+
+// Comment
+var commentSchema = new mongoose.Schema({
+    description: String,
+    author: String,
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+var Comment = mongoose.model("Comment", commentSchema);
 
 // ======
 // ROUTES

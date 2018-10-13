@@ -36,9 +36,6 @@ a.postlink:hover {
 .backbutton {
     text-align: center;
 }
-.backbutton form {
-    display: inline;
-}
 
 /* Landing Page */
 #grayedout {
