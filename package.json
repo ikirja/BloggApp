@@ -1,6 +1,6 @@
 {
   "name": "bloggapp",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Nice blog app on node.js and express. There's 3 main parts: 1) landing (index) page, 2) photo blog, 3) regular blog.",
   "main": "app.js",
   "scripts": {
