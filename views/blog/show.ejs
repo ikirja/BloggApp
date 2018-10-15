@@ -43,7 +43,7 @@
     <div class="ui hidden divider"></div>
     <div class="ui comments">
         <h3 class="ui dividing header">Комментарии</h3>
-        <% if(post.comments){post.comments.sort(myFunctions.sortDescDate)} %>
+        <% post.comments.sort(myFunctions.sortDescDate) %>
         <% post.comments.forEach(function(comment){ %>
         <div class="comment">
             <div class="content">
