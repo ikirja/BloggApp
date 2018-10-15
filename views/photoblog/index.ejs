@@ -1,6 +1,7 @@
 <% include ../partials/header %>
 
 <div class="ui container">
+    
     <div class="ui placeholder segment center aligned">
         <h1 class="ui center aligned icon header">
             <i class="camera circular icon"></i>
@@ -39,7 +40,6 @@
     <div class="ui piled segment">
         <div class="ui stackable doubling four column grid">
             <% photos.sort(myFunctions.sortDescDate) %>
-            <% var i = 0 %>
             <% photos.forEach(function(photo){ %>
             <div class="column">
                 <a class="postlink" href="/photoblog/<%= photo._id %>">
@@ -55,20 +55,7 @@
                 </div>
                 </a>
             </div>
-            <% i++ %>
             <% }); %>
-            
-            <!-- Dummy Photo post
-            <div class="column">
-                <div class="ui segment photo">
-                    <div class="ui fluid image">
-                        <img src="https://preview.ibb.co/gzc2mz/IMG_2027.jpg">
-                    </div>
-                    <p>ВДНХ, отель "Космос", вид с 23 этажа.</p>
-                    <p>15 Сентября 2018</p>
-                </div>
-            </div>
-            -->
         </div>
     </div>
     <!-- end Photos grid -->

@@ -9,12 +9,18 @@
             <div class="fields">
                 <div class="field">
                     <form action="/blog/<%= post._id %>/edit" method="GET">
-                        <button class="ui mini yellow button"><i class="icon edit"></i>Редактировать</button>
+                        <button class="ui vertical animated mini yellow button">
+                            <div class="visible content">Редактировать</div>
+                            <div class="hidden content"><i class="icon edit"></i></div>
+                        </button>
                     </form>
                 </div>
                 <div class="field">
                     <form action="/blog/<%= post._id %>?_method=DELETE" method="POST"> 
-                        <button class="ui mini red button"><i class="icon trash alternate"></i>Удалить</button>
+                        <button class="ui vertical animated mini red button">
+                            <div class="visible content">Удалить</div>
+                           <div class="hidden content"><i class="icon trash alternate"></i></div>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -22,40 +28,55 @@
         <p><%= post.description %></p>
         <p><strong><%= moment(post.date).locale("ru").fromNow() %></strong></p>
         <div class="backbutton">
-            <a class="ui blue button" href="/blog"><i class="icon undo"></i>Назад</a>
+            <a class="ui vertical animated blue button" href="/blog">
+                <div class="visible content">Назад</div>
+                <div class="hidden content"><i class="icon undo"></i></div>
+            </a>
         </div>
     </div>
     <!-- end Blog post -->
     <!-- Blog post comments -->
-    <a class="ui right floated green button" href="/blog/:id/comments/:commentId"><i class="icon edit"></i>Добавить комментарий</a>
+    <a class="ui vertical animated right floated green button" href="/blog/<%= post._id %>/comments/new">
+        <div class="visible content">Добавить комментарий</div>
+        <div class="hidden content"><i class="icon edit"></i></div>
+    </a>
     <div class="ui hidden divider"></div>
     <div class="ui comments">
         <h3 class="ui dividing header">Комментарии</h3>
+        <% post.comments.sort(myFunctions.sortDescDate) %>
+        <% post.comments.forEach(function(comment){ %>
         <div class="comment">
             <div class="content">
-                <span class="author">Автор</span>
+                <span class="author"><%= comment.author %></span>
                 <div class="metadata">
-                    <span class="date">Дата</span>
+                    <span class="date"><%= moment(comment.date).locale("ru").fromNow() %></span>
                 </div>
                 <div class="text">
-                    Текст комментария
+                    <%= comment.description %>
                 </div>
                 <div class="ui form">
                     <div class="fields">
                         <div class="field">
-                            <form action="" method="GET">
-                                <button class="ui mini yellow basic button"><i class="icon edit"></i>Редактировать</a>
+                            <form action="/blog/<%= post._id %>/comments/<%= comment._id %>/edit" method="GET">
+                                <button class="ui vertical animated mini yellow basic button">
+                                    <div class="visible content">Редактировать</div>
+                                    <div class="hidden content"><i class="icon edit"></i></div>
+                                </button>
                             </form>
                         </div>
                         <div class="field">
-                            <form action="" method="POST">
-                                <button class="ui mini red basic button"><i class="icon trash alternate"></i>Удалить</button>
+                            <form action="/blog/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                <button class="ui vertical animated mini red basic button">
+                                    <div class="visible content">Удалить</div>
+                                    <div class="hidden content"><i class="icon trash alternate"></i></div>
+                                </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <% }); %>
     </div>
     <!-- end Blog post comments -->
 </div>

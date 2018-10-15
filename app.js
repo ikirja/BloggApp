@@ -94,7 +94,7 @@ app.get("/", function(req, res){
 });
 
 // Blog Routes
-// Blog index route
+// Blog Index route
 app.get("/blog", function(req, res){
     Post.find({}, function(err, allPosts){
         if(err){
@@ -105,7 +105,7 @@ app.get("/blog", function(req, res){
     });
 });
 
-// Blog create route
+// Blog Create route
 app.post("/blog", function(req, res){
     Post.create(req.body.post, function(err, newPost){
         if(err){
@@ -117,9 +117,9 @@ app.post("/blog", function(req, res){
     });
 });
 
-// Blog show route
+// Blog Show route
 app.get("/blog/:id", function(req, res){
-    Post.findById(req.params.id, function(err, post){
+    Post.findById(req.params.id).populate("comments").exec(function(err, post){
         if(err){
             console.log(err);
         } else {
@@ -128,7 +128,7 @@ app.get("/blog/:id", function(req, res){
     });
 });
 
-// Blog edit route
+// Blog Edit route
 app.get("/blog/:id/edit", function(req, res){
     Post.findById(req.params.id, function(err, post){
         if(err){
@@ -139,7 +139,7 @@ app.get("/blog/:id/edit", function(req, res){
     });
 });
 
-// Blog update route
+// Blog Update route
 app.put("/blog/:id", function(req, res){
     Post.findByIdAndUpdate(req.params.id, { $set: req.body.post }, function(err, post){
         if(err){
@@ -150,7 +150,7 @@ app.put("/blog/:id", function(req, res){
     });
 });
 
-// Blog destroy route
+// Blog Destroy route
 app.delete("/blog/:id", function(req, res){
     Post.findByIdAndRemove(req.params.id, function(err){
         if(err){
@@ -161,8 +161,73 @@ app.delete("/blog/:id", function(req, res){
     });
 });
 
+// Blog Comment New route
+app.get("/blog/:id/comments/new", function(req, res){
+    Post.findById(req.params.id, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            var category = "blog";
+            res.render("comments/new", { post: post, category: category });
+        }
+    });
+});
+
+// Blog Comment Create route
+app.post("/blog/:id/comments", function(req, res){
+    Post.findById(req.params.id, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    post.comments.push(comment);
+                    post.save();
+                    res.redirect("/blog/" + post._id);
+                }
+            });
+        }
+    });
+});
+
+// Blog Comment Edit route
+app.get("/blog/:id/comments/:commentId/edit", function(req, res){
+    Comment.findById(req.params.commentId, function(err, comment){
+        if(err){
+            console.log(err);
+        } else {
+            var category = "blog";
+            res.render("comments/edit", { post_id: req.params.id, comment: comment, category: category });
+        }
+    });
+});
+
+// Blog Comment Update route
+app.put("/blog/:id/comments/:commentId", function(req, res){
+    Comment.findByIdAndUpdate(req.params.commentId, { $set: req.body.comment }, function(err, comment){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/blog/" + req.params.id);
+        }
+    });
+});
+
+// Blog Comment Destroy route
+app.delete("/blog/:id/comments/:commentId", function(req, res){
+    Comment.findByIdAndRemove(req.params.commentId, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/blog/" + req.params.id);
+        }
+    });
+});
+
 // Photo Blog Routes
-// Photo blog index route
+// Photo Blog Index route
 app.get("/photoblog", function(req, res){
     Photo.find({}, function(err, allPhotos){
         if(err){
@@ -173,7 +238,7 @@ app.get("/photoblog", function(req, res){
     });
 });
 
-// Photo Blog create route
+// Photo Blog Create route
 app.post("/photoblog", function(req, res){
     Photo.create(req.body.photo, function(err, newPhoto){
         if(err){
@@ -184,9 +249,9 @@ app.post("/photoblog", function(req, res){
     });
 });
 
-// Photo Blog show route
+// Photo Blog Show route
 app.get("/photoblog/:id", function(req, res){
-    Photo.findById(req.params.id, function(err, photo){
+    Photo.findById(req.params.id).populate("comments").exec(function(err, photo){
         if(err){
             console.log(err);
         } else {
@@ -195,7 +260,7 @@ app.get("/photoblog/:id", function(req, res){
     });
 });
 
-// Photo Blog edit route
+// Photo Blog Edit route
 app.get("/photoblog/:id/edit", function(req, res){
     Photo.findById(req.params.id, function(err, photo){
         if(err){
@@ -206,7 +271,7 @@ app.get("/photoblog/:id/edit", function(req, res){
     });
 });
 
-// Photo Blog update route
+// Photo Blog Update route
 app.put("/photoblog/:id", function(req, res){
     Photo.findByIdAndUpdate(req.params.id, { $set: req.body.photo }, function(err, photo){
         if(err){
@@ -217,13 +282,78 @@ app.put("/photoblog/:id", function(req, res){
     });
 });
 
-// Photo Blog destroy route
+// Photo Blog Destroy route
 app.delete("/photoblog/:id", function(req, res){
     Photo.findByIdAndRemove(req.params.id, function(err){
         if(err){
             console.log(err);
         } else {
             res.redirect("/photoblog/");
+        }
+    });
+});
+
+// Photo Blog Comment New route
+app.get("/photoblog/:id/comments/new", function(req, res){
+    Photo.findById(req.params.id, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            var category = "photoblog";
+            res.render("comments/new", { post: post, category: category });
+        }
+    });
+});
+
+// Photo Blog Comment Create route
+app.post("/photoblog/:id/comments", function(req, res){
+    Photo.findById(req.params.id, function(err, post){
+        if(err){
+            console.log(err);
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    post.comments.push(comment);
+                    post.save();
+                    res.redirect("/photoblog/" + post._id);
+                }
+            });
+        }
+    });
+});
+
+// Photo Blog Comment Edit route
+app.get("/photoblog/:id/comments/:commentId/edit", function(req, res){
+    Comment.findById(req.params.commentId, function(err, comment){
+        if(err){
+            console.log(err);
+        } else {
+            var category = "photoblog";
+            res.render("comments/edit", { post_id: req.params.id, comment: comment, category: category });
+        }
+    });
+});
+
+// Photo Blog Comment Update route
+app.put("/photoblog/:id/comments/:commentId", function(req, res){
+    Comment.findByIdAndUpdate(req.params.commentId, { $set: req.body.comment }, function(err, comment){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/photoblog/" + req.params.id);
+        }
+    });
+});
+
+// Photo Blog Comment Destroy route
+app.delete("/photoblog/:id/comments/:commentId", function(req, res){
+    Comment.findByIdAndRemove(req.params.commentId, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/photoblog/" + req.params.id);
         }
     });
 });

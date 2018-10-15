@@ -1,13 +1,14 @@
 <% include ../partials/header %>
 
 <div class="ui container">
+    
     <div class="ui placeholder segment center aligned">
         <h1 class="ui center aligned icon header">
             <i class="blogger circular icon"></i>
             <p>Блог</p>
         </h1>
         <p>
-            Рассказываю о разработке веб-приложений и различных ресурсов.<br> JavaScript, PHP, Node.JS - что под руку попадётся, о том и напишу.
+            Рассказываю о разработке веб-приложений и различных ресурсов.<br> JavaScript, Node.JS, mongoDB, Bitrix, PHP - что под руку попадётся, о том и напишу.
         </p>
         <button class="ui green button modalbutton"><i class="icon plus circle"></i>Добавить пост</button>
         <div class="ui modal">
@@ -35,7 +36,6 @@
     <!-- Blog grid -->
     <div class="ui stackable two column grid">
         <% posts.sort(myFunctions.sortDescDate) %>
-        <% var i = 0 %>
         <% posts.forEach(function(post) { %>
         <div class="column">
             <a class="postlink" href="/blog/<%= post._id %>">
@@ -47,17 +47,7 @@
             </div>
             </a>
         </div>
-        <% i++ %>
         <% }); %>
-        <!-- Dummy info
-        <div class="column">
-            <div class="ui segment">
-                <h1 class="ui header">BloggApp, разработка началась!</h1>
-                <p>Обучение идёт у меня и днём, и ночью. И мне всё больше нравится Node.JS! Все прелести и минусы NoSQL (MongoDB) я ещё не до конца понял, но работаю и в этом направлении. Начал работать над мини веб приложением, с базовой функциональностью блога и галереи. Как раз идеально для старта!</p>
-                <p>6 Октября 2018</p>
-            </div>
-        </div>
-        -->
     </div>
     <!-- end Blog grid -->
     
