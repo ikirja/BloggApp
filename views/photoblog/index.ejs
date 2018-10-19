@@ -10,7 +10,7 @@
         <p>
             Периодически балуюсь кнопконажимательством.<br> Вся моя безвкусица чуть ниже. Листай, не стесняйся.
         </p>
-        <% if(currentUser && currentUser.username === "ikirja"){ %>
+        <% if(currentUser && currentUser.isAdmin){ %>
         <button class="ui green button modalbutton" href="/photoblog/new"><i class="icon plus circle"></i>Добавить фото</button>
         <% } %>
     </div>

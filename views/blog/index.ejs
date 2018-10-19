@@ -10,7 +10,7 @@
         <p>
             Рассказываю о разработке веб-приложений и различных ресурсов.<br> JavaScript, Node.JS, mongoDB, Bitrix, PHP - что под руку попадётся, о том и напишу.
         </p>
-        <% if(currentUser && currentUser.username === "ikirja"){ %>
+        <% if(currentUser && currentUser.isAdmin){ %>
         <button class="ui green button modalbutton"><i class="icon plus circle"></i>Добавить пост</button>
         <% } %>
     </div>
