@@ -34,18 +34,20 @@ a.postlink:hover {
     color: #000;
 }
 .backbutton {
-    text-align: center;
+    max-width: 8em!important;
+}
+.login {
+    width: 30%;
+    margin: auto;
+}
+.ui .modal {
+    padding: 20px;
 }
 
 /* Landing Page */
 #grayedout {
     color: gray;
     opacity: 0.2;
-}
-
-/* Blog Page */
-.ui .modal {
-    padding: 20px;
 }
 
 /* Photo Page */
@@ -58,6 +60,9 @@ a.postlink:hover {
 }
 .photodata {
     padding: 20px;
+}
+.fieldsleft {
+    padding-right: 400px;
 }
 
 /* Footer */

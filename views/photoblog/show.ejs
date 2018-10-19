@@ -11,9 +11,10 @@
             </div>
             <div class="column">
                 <h1 class="ui header"><%= photo.name %></h1>
-                <h3>Автор: <%= photo.author %></h3>
+                <h3>Автор: <%= photo.author.name %></h3>
+                <% if(currentUser && photo.author.id.equals(currentUser._id)){ %>
                 <div class="ui form">
-                    <div class="fields">
+                    <div class="fields fieldsleft">
                         <div class="field">
                             <a class="ui vertical animated mini yellow button" href="/photoblog/<%= photo._id %>/edit">
                                 <div class="visible content">Редактировать</div>
@@ -30,37 +31,41 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <p><%= photo.description %></p>
                 <p><strong><%= moment(photo.date).locale("ru").fromNow() %></strong></p>
-                <div class="backbutton">
-                    <a class="ui vertical animated blue button" href="/photoblog">
+                <!--<div class="backbutton">-->
+                    <a class="ui vertical animated blue button backbutton" href="/photoblog">
                         <div class="visible content">Назад</div>
                         <div class="hidden content"><i class="icon undo"></i></div>
                     </a>
-                </div>
+                <!--</div>-->
             </div>
         </div>
     </div>
     <!-- end Photo Blog post -->
     <!-- Blog post comments -->
+    <% if(currentUser){ %>
     <a class="ui vertical animated right floated green button" href="/photoblog/<%= photo._id %>/comments/new">
         <div class="visible content">Добавить комментарий</div>
         <div class="hidden content"><i class="icon edit"></i></div>
     </a>
+    <% } %>
     <div class="ui hidden divider"></div>
     <div class="ui comments">
         <h3 class="ui dividing header">Комментарии</h3>
-        <% photo.comments.sort(myFunctions.sortDescDate) %>
+        <% photo.comments.sort(bloggApp.sortDescDate) %>
         <% photo.comments.forEach(function(comment){ %>
         <div class="comment">
             <div class="content">
-                <span class="author"><%= comment.author %></span>
+                <span class="author"><%= comment.author.name %></span>
                 <div class="metadata">
                     <span class="date"><%= moment(comment.date).locale("ru").fromNow() %></span>
                 </div>
                 <div class="text">
                     <%= comment.description %>
                 </div>
+                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                 <div class="ui form">
                     <div class="fields">
                         <div class="field">
@@ -81,6 +86,7 @@
                         </div>
                     </div>
                 </div>
+                <% } %>
             </div>
         </div>
         <% }); %>

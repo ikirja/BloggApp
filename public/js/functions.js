@@ -1,4 +1,6 @@
-// myFunctions initiliase in app.js as global myFunctions.function()
+// bloggApp initiliazed in app.js as res.locals.bloggApp
+
+// Functions
 module.exports = {
     sortDescDate: function(a, b) {
         if (a.date < b.date) {

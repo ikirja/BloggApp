@@ -10,36 +10,15 @@
         <p>
             Периодически балуюсь кнопконажимательством.<br> Вся моя безвкусица чуть ниже. Листай, не стесняйся.
         </p>
-        <button class="ui green button modalbutton"><i class="icon plus circle"></i>Добавить фото</button>
-        <div class="ui modal">
-            <span class="closemodal"><i class="large close icon"></i></span>
-            <form class="ui form" action="/photoblog" method="POST">
-                <div class="field">
-                    <h1>Новый Фото пост</h1>
-                </div>
-                <div class="field">
-                    <input type="text" name="photo[name]" placeholder="Название фото" required>
-                </div>
-                <div class="field">
-                    <input type="text" name="photo[author]" placeholder="Ваше имя" required>
-                </div>
-                <div class="field">
-                    <input type="text" name="photo[url]" placeholder="Ссылка на фото" required>
-                </div>
-                <div class="field">
-                    <textarea name="photo[description]" placeholder="Описание фото" required></textarea>
-                </div>
-                <div class="field">
-                    <button class="ui basic violet button">Добавить</button>
-                </div>
-            </form>
-        </div>
+        <% if(currentUser && currentUser.username === "ikirja"){ %>
+        <button class="ui green button modalbutton" href="/photoblog/new"><i class="icon plus circle"></i>Добавить фото</button>
+        <% } %>
     </div>
     
     <!-- Photos grid -->
     <div class="ui piled segment">
         <div class="ui stackable doubling four column grid">
-            <% photos.sort(myFunctions.sortDescDate) %>
+            <% photos.sort(bloggApp.sortDescDate) %>
             <% photos.forEach(function(photo){ %>
             <div class="column">
                 <a class="postlink" href="/photoblog/<%= photo._id %>">
@@ -49,7 +28,7 @@
                     </div>
                     <div class="photodata">
                         <%= photo.name %><br>
-                        Автор: <%= photo.author %><br>
+                        Автор: <%= photo.author.name %><br>
                         <strong><%= moment(photo.date).locale("ru").fromNow() %></strong>
                     </div>
                 </div>
@@ -60,6 +39,27 @@
     </div>
     <!-- end Photos grid -->
     
+</div>
+
+<div class="ui modal">
+    <i class="close icon"></i>
+    <form class="ui form" action="/photoblog" method="POST">
+        <div class="field">
+            <h1>Новый Фото пост</h1>
+        </div>
+        <div class="field">
+            <input type="text" name="name" placeholder="Название фото" required>
+        </div>
+        <div class="field">
+            <input type="text" name="url" placeholder="Ссылка на фото" required>
+        </div>
+        <div class="field">
+            <textarea name="description" placeholder="Описание фото" required></textarea>
+        </div>
+        <div class="field">
+            <button class="ui basic violet button">Добавить</button>
+        </div>
+    </form>
 </div>
 
 <% include ../partials/footer %>
