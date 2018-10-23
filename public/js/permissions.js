@@ -32,6 +32,8 @@ module.exports = {
                     console.log(err);
                 } else if(post.author.id.equals(req.user._id)){
                     next();
+                } else if(req.user.isAdmin){
+                    next();
                 } else {
                     res.redirect("/blog/" + req.params.id);
                 }
@@ -46,6 +48,8 @@ module.exports = {
                 if(err){
                     console.log(err);
                 } else if(photo.author.id.equals(req.user._id)){
+                    next();
+                } else if(req.user.isAdmin){
                     next();
                 } else {
                     res.redirect("/photoblog/" + req.params.id);
@@ -63,8 +67,10 @@ module.exports = {
                     console.log(err);
                 } else if(comment.author.id.equals(req.user._id)){
                     next();
+                } else if(req.user.isAdmin){
+                    next();
                 } else {
-                    res.redirect("/")
+                    res.redirect("/");
                 }
             });
         } else {

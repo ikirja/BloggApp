@@ -2,10 +2,10 @@
 
 <div class="ui container">
     <!-- Blog post -->
-    <div class="ui placeholder segment">
+    <div class="ui segment">
         <h1 class="ui center aligned icon header"><%= post.header %></h1>
         <h3>Автор: <%= post.author.name %></h3>
-        <% if(currentUser && post.author.id.equals(currentUser._id)){ %>
+        <% if(currentUser && post.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
         <div class="ui form">
             <div class="fields">
                 <div class="field">
@@ -58,7 +58,7 @@
                 <div class="text">
                     <%= comment.description %>
                 </div>
-                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                 <div class="ui form">
                     <div class="fields">
                         <div class="field">

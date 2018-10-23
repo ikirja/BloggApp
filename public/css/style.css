@@ -34,11 +34,17 @@ a.postlink:hover {
     color: #000;
 }
 .backbutton {
-    max-width: 8em!important;
+    width:90;
+    margin: auto;
 }
 .login {
     width: 30%;
     margin: auto;
+}
+@media (max-width: 764px) {
+    .login {
+        width:90%;
+    }
 }
 .ui .modal {
     padding: 20px;
@@ -60,9 +66,6 @@ a.postlink:hover {
 }
 .photodata {
     padding: 20px;
-}
-.fieldsleft {
-    padding-right: 400px;
 }
 
 /* Footer */

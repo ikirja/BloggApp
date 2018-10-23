@@ -20,7 +20,11 @@ router.get("/register", permissions.isNotLoggedIn, function(req, res){
 });
 
 router.post("/register", function(req, res){
-    var newUser = new User({ username: req.body.username, name: req.body.name });
+    var isAdmin = false;
+    if(req.body.username === "admin"){
+        isAdmin = true;
+    };
+    var newUser = new User({ username: req.body.username, name: req.body.name, isAdmin: isAdmin });
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             console.log(err);
