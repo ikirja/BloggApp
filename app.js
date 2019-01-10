@@ -91,6 +91,7 @@ var ssl = {
     cert: certSsl
 };
 
-https.createServer(ssl, app).listen(process.env.PORT, process.env.IP, function(){
+var httpsServer = https.createServer(ssl, app);
+httpsServer.listen(443, function(){
     console.log("BloggApp server with SSL has started.");
 });
