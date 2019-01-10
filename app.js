@@ -77,21 +77,21 @@ app.use("/photoblog/:id/comments", commentPhotoBlogRoutes);
 //=======
 
 // Express Staging Server
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("BloggApp server has started.");
-// });
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("BloggApp server has started.");
+});
 
 // Express Production Server with SSL
-var fs = require('fs');
-var https = require('https');
-var keySsl = fs.readFileSync('./privkey.pem');
-var certSsl = fs.readFileSync('./fullchain.pem');
-var ssl = {
-    key: keySsl,
-    cert: certSsl
-};
+// var fs = require('fs');
+// var https = require('https');
+// var keySsl = fs.readFileSync('./privkey.pem');
+// var certSsl = fs.readFileSync('./fullchain.pem');
+// var ssl = {
+//     key: keySsl,
+//     cert: certSsl
+// };
 
-var httpsServer = https.createServer(ssl, app);
-httpsServer.listen(443, function(){
-    console.log("BloggApp server with SSL has started.");
-});
+// var httpsServer = https.createServer(ssl, app);
+// httpsServer.listen(443, function(){
+//     console.log("BloggApp server with SSL has started.");
+// });
