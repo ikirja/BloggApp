@@ -22,14 +22,14 @@ const system = require('./config');
 const User = require(`${system.components.system}/models/user`);
 
 // DB
-mongoose.connect('mongodb://localhost:27017/BloggApp', {
+mongoose.connect(`mongodb://localhost:27017/${system.db}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
 });
 
 // Settings
-app.use(express.static(system.templates.static));
+app.use(express.static(system.publicRoot));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('sAeDAyvx2cYz5FFV'));
 app.use(methodOverride('_method'));
@@ -54,6 +54,11 @@ let comment = require(`${system.components.system}/routes/api/comment`);
 app.use('/api', auth);
 app.use('/api', blog);
 app.use('/api', comment);
+
+// Serve Frontend Public Directory
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: system.publicRoot });
+});
 
 // PORT and IP
 var port = '';
