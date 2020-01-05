@@ -1,5 +1,5 @@
 # BloggApp
-A lightweight web application for a blog. It's super fast, use to deploy. A great alternative for other CMS-type blogs you can find on the web.
+A lightweight web application for a blog. It's super fast, easy to deploy. A great alternative for other CMS-type blogs you can find on the web.
 
 # Why BloggApp?
 It's really fast because it's built using NodeJS and ExpressJS. Lightweight, it's under 30mb unarchived on your webserver. It's using MongoDB to store info, so all your data is in json format. Did I already told you that it's REALLY lightweight and fast? Well, it is! 
@@ -12,8 +12,8 @@ Prerequisites:
 Clone repositore to your server.
 Go to location where you cloned the app.
 
-Run in command line:
-npm i
+Run in command line:<br/>
+npm i<br/>
 to install all node_modules (dependecies).
 
 App is ready to use.
@@ -27,8 +27,8 @@ If you don't know what to do, just run 'node server.js' in CLI.
 Currently to give Admin role to your user, it must be done from CLI of your server. Log in into mongo, find user and update it's isAdmin prop to true. Sorry for inconvinience, I'll add admin management later.
 
 # App structure
-/components/ - all components of the app.
-/config/ - config file of the app.
+/components/ - all components of the app.<br/>
+/config/ - config file of the app.<br/>
 server.js - entry file.
 
 # Usage of this software
@@ -37,6 +37,6 @@ If you will use the app on public server, you should leave references for me and
 
 Thank you!
 
-2018-2020
-BloggApp
+2018-2020<br/>
+BloggApp<br/>
 Developed by Kirill Makeev
