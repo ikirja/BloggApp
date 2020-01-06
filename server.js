@@ -31,6 +31,7 @@ mongoose.connect(`mongodb://localhost:27017/${system.db}`, {
 // Settings
 app.use(express.static(system.publicRoot));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser('sAeDAyvx2cYz5FFV'));
 app.use(methodOverride('_method'));
 app.use(session({
@@ -51,12 +52,13 @@ passport.deserializeUser(User.deserializeUser());
 let auth = require(`${system.components.system}/routes/api/auth`);
 let blog = require(`${system.components.system}/routes/api/blog.js`);
 let comment = require(`${system.components.system}/routes/api/comment`);
+let email = require(`${system.components.system}/routes/api/email`);
 app.use('/api', auth);
 app.use('/api', blog);
-app.use('/api', comment);
+app.use('/api', email);
 
 // Serve Frontend Public Directory
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile('index.html', { root: system.publicRoot });
 });
 

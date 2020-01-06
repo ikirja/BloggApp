@@ -34,23 +34,23 @@ module.exports = {
       if(req.isAuthenticated()){
         return next();
       }
-      res.status(400).send("Not authenticated");
+      res.status(401).send("Not authenticated");
     },
     isNotLoggedIn: function(req, res, next){
       if(!req.isAuthenticated()){
         return next();
       }
-      res.status(400).send("User is authenticated");
+      res.status(403).send("User is authenticated");
     },
     isAdmin: function(req, res, next){
       if(req.isAuthenticated()){
           if(req.user.isAdmin){
               return next();
           } else {
-              res.status(401).send('Not allowed')
+              res.status(403).send('Not allowed')
           }
       } else {
-        res.status(400).send('Not authenticated')
+        res.status(401).send('Not authenticated')
       }
     },
     checkUserBlogPost: function(req, res, next){
@@ -63,11 +63,11 @@ module.exports = {
           } else if(req.user.isAdmin){
             next();
           } else {
-            res.status(401).send('Not allowed');
+            res.status(403).send('Not allowed');
           }
         });
       } else {
-        res.status(400).send('Not authenticated');
+        res.status(401).send('Not authenticated');
       }
     },
     checkUserComment: function(req, res, next){
@@ -80,11 +80,11 @@ module.exports = {
           } else if(req.user.isAdmin){
             next();
           } else {
-            res.status(401).send('Not allowed');
+            res.status(403).send('Not allowed');
           }
         });
       } else {
-        res.status(400).send('Not authenticated');
+        res.status(401).send('Not authenticated');
       }
     }
   }

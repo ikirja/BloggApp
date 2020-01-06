@@ -9,6 +9,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../../models/user');
+const { permissionsMiddleware } = require('../../functions');
 
 //****
 // API
@@ -42,5 +43,20 @@ router.post('/register', (req, res) => {
     }
   });
 });
+
+// User Info
+router.get('/user', permissionsMiddleware.isLoggedIn, async (req, res) => {
+  try {
+    let user = await User.findById(req.user._id);
+    let allowedInfo = {
+      id: user._id,
+      name: user.name,
+      isAdmin: user.isAdmin
+    }
+    res.json(allowedInfo);
+  } catch(err) {
+    res.send('User has not been found');
+  }
+})
 
 module.exports = router;
