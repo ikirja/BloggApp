@@ -55,6 +55,7 @@ let comment = require(`${system.components.system}/routes/api/comment`);
 let email = require(`${system.components.system}/routes/api/email`);
 app.use('/api', auth);
 app.use('/api', blog);
+app.use('/api', comment);
 app.use('/api', email);
 
 // Serve Frontend Public Directory

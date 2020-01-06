@@ -21,9 +21,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-//****
-// API
-//****
+//*************
+// API Sendmail
+//*************
 
 // Send Info
 router.post('/sendmail', async (req, res) => {
