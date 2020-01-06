@@ -9,7 +9,7 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const sanitizeHtml = require('sanitize-html');
-const system = require('../../../config')
+const system = require('../../../../config')
 
 // Transporter for Nodemailer
 const transporter = nodemailer.createTransport(system.nodemailer.options);

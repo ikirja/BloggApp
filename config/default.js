@@ -22,7 +22,9 @@ system.db = 'BloggApp';
 // Public Directory Absolute Path
 system.publicRoot = '/home/kirill/apps/blogg-app-frontend/dist';
 
-system.nodemailer.options = {};
+system.nodemailer = {
+  options: {}
+};
 
 //*******************************
 // SYSTEM SETTINGS, DO NOT CHANGE
