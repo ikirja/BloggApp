@@ -9,17 +9,10 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const sanitizeHtml = require('sanitize-html');
+const system = require('../../../config')
 
 // Transporter for Nodemailer
-const transporter = nodemailer.createTransport({
-  host: 'smtp.beget.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'me@kirillmakeev.ru',
-    pass: '9Ghbdtn2dctv6'
-  }
-});
+const transporter = nodemailer.createTransport(system.nodemailer.options);
 
 //*************
 // API Sendmail
