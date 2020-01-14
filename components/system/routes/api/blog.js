@@ -8,8 +8,9 @@
 const express = require('express');
 const router = express.Router();
 const sanitizeHtml = require('sanitize-html');
+const passport = require('passport');
 const Post = require('../../models/post');
-const { permissionsMiddleware } = require('../../functions');
+const { middleware } = require('../../functions');
 
 //****
 // API
@@ -36,7 +37,7 @@ router.get('/post/:id', async (req, res) => {
 })
 
 // Create Blog Post
-router.post('/post', permissionsMiddleware.isAdmin, async (req, res) => {
+router.post('/post', [ passport.authenticate('jwt', { session: false }), middleware.permissions.isAdmin ], async (req, res) => {
   let post = {
     author: {
       id: req.user._id,
@@ -55,7 +56,7 @@ router.post('/post', permissionsMiddleware.isAdmin, async (req, res) => {
 });
 
 // Update Blog Post
-router.put('/post/:id', permissionsMiddleware.isAdmin, async (req, res) => {
+router.put('/post/:id', [ passport.authenticate('jwt', { session: false }), middleware.permissions.isAdmin ], async (req, res) => {
   let post = {
     header: req.body.header,
     description: sanitizeHtml(req.body.description)
@@ -70,7 +71,7 @@ router.put('/post/:id', permissionsMiddleware.isAdmin, async (req, res) => {
 });
 
 // Delete Blog Post
-router.delete('/post/:id', permissionsMiddleware.isAdmin, async (req, res) => {
+router.delete('/post/:id', [ passport.authenticate('jwt', { session: false }), middleware.permissions.isAdmin ], async (req, res) => {
   try {
     await Post.findByIdAndRemove(req.params.id);
     res.send('Post has been deleted');

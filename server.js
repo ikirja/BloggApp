@@ -13,7 +13,10 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const session = require('express-session');
+const passportJWT = require('passport-jwt');
+const JwtStrategy = passportJWT.Strategy;
+const ExtractJwt = passportJWT.ExtractJwt;
+
 
 // CONFIGURATION INIT
 const system = require('./config');
@@ -34,16 +37,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser('sAeDAyvx2cYz5FFV'));
 app.use(methodOverride('_method'));
-app.use(session({
-  secret: 'vXpR45guz9VdpChR',
-  resave: false,
-  saveUninitialized: true
-}));
 app.use(passport.initialize());
-app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.use(new JwtStrategy({
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: system.jwtSecret
+}, function(jwtPayload, cb){
+  return User.findById(jwtPayload._id)
+          .then(user => {
+            return cb(null, user);
+          })
+          .catch(err => {
+            return cb(err);
+          });
+  })
+);
+
 
 //*******
 // ROUTES

@@ -22,9 +22,13 @@ system.db = 'BloggApp';
 // Public Directory Absolute Path
 system.publicRoot = '/home/kirill/apps/blogg-app-frontend/dist';
 
+// Nodemailer Transport Options
 system.nodemailer = {
   options: {}
 };
+
+// JWToken Secret
+system.jwtSecret = '';
 
 //*******************************
 // SYSTEM SETTINGS, DO NOT CHANGE

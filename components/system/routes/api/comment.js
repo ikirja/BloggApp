@@ -8,16 +8,17 @@
 const express = require('express');
 const router = express.Router();
 const sanitizeHtml = require('sanitize-html');
+const passport = require('passport');
 const Post = require('../../models/post');
 const Comment = require('../../models/comment')
-const { permissionsMiddleware } = require('../../functions');
+const { middleware } = require('../../functions');
 
 //************
 // API Comment
 //************
 
 // Create Comment
-router.post('/comment', permissionsMiddleware.isLoggedIn, async (req, res) => {
+router.post('/comment', passport.authenticate('jwt', { session: false }), async (req, res) => {
   let comment = {
     author: {
       id: req.user._id,
@@ -38,7 +39,7 @@ router.post('/comment', permissionsMiddleware.isLoggedIn, async (req, res) => {
 });
 
 // Get Comment
-router.get('/comment/:id', permissionsMiddleware.checkUserComment, async (req, res) => {
+router.get('/comment/:id', [ passport.authenticate('jwt', { session: false }), middleware.permissions.checkUserComment ], async (req, res) => {
   try {
     let comment = await Comment.findById(req.params.id);
     res.send(comment);
@@ -48,7 +49,7 @@ router.get('/comment/:id', permissionsMiddleware.checkUserComment, async (req, r
 })
 
 // Update Comment
-router.put('/comment/:id', permissionsMiddleware.checkUserComment, async (req, res) => {
+router.put('/comment/:id', [ passport.authenticate('jwt', { session: false }), middleware.permissions.checkUserComment ], async (req, res) => {
   let comment = {
     description: sanitizeHtml(req.body.description)
   };
@@ -62,7 +63,7 @@ router.put('/comment/:id', permissionsMiddleware.checkUserComment, async (req, r
 })
 
 // Delete Comment
-router.delete('/comment/:id', permissionsMiddleware.checkUserComment, async (req, res) => {
+router.delete('/comment/:id', [ passport.authenticate('jwt', { session: false }), middleware.permissions.checkUserComment ], async (req, res) => {
   try {
     await Comment.findByIdAndRemove(req.params.id);
     res.send('Comment has been deleted')
