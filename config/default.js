@@ -13,6 +13,9 @@ system.nodeEnv = 'DEVELOPMENT';
 system.port = '8080';
 system.ip = 'localhost';
 
+// Site Name
+system.siteName = '';
+
 // Template Folder name
 let templateFolder = '';
 
@@ -20,11 +23,23 @@ let templateFolder = '';
 system.db = 'BloggApp';
 
 // Public Directory Absolute Path
-system.publicRoot = '/home/kirill/apps/blogg-app-frontend/dist';
+system.publicRoot = '';
 
 // Nodemailer Transport Options
+// Nodemailer Transport Options
 system.nodemailer = {
-  options: {}
+  options: {
+    host: '',
+    port: 465,
+    secure: true,
+    auth: {
+      user: '',
+      pass: ''
+    }
+  },
+  messages: {
+    forgotPassword: ''
+  }
 };
 
 // JWToken Secret

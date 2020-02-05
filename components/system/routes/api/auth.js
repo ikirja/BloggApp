@@ -7,11 +7,18 @@
 
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const User = require('../../models/user');
-const { middleware } = require('../../functions');
+const PasswordToken = require('../../models/password-token');
+
+// Config
 const system = require('../../../../config');
+
+// Transporter for Nodemailer
+const transporter = nodemailer.createTransport(system.nodemailer.options);
 
 //****
 // API
@@ -62,5 +69,52 @@ router.get('/user', passport.authenticate('jwt', { session: false }), async (req
     res.send('User has not been found');
   }
 })
+
+// Forgot Password
+router.post('/forgot', async (req, res) => {
+  try {
+    let user = await User.findOne({ username: req.body.username });
+    let token = await PasswordToken.create({ user: user._id, token: crypto.randomBytes(2).toString('hex') });
+
+    let mail = {
+      from: system.nodemailer.options.auth.user,
+      to: user.email,
+      subject: 'Сброс пароля',
+      text: `${system.nodemailer.messages.forgotPassword} ${token.token}`
+    };
+
+    transporter.sendMail(mail, (err) => {
+      if(err){
+        res.status(400).send('Error occured while sending Email');
+      } else {
+        res.send('Email has been sent');
+      }
+    });
+
+  } catch(err) {
+    res.status(400).send('Error has occured');
+  }
+});
+
+router.post('/forgot/reset', async (req, res) => {
+  if(req.body.password === req.body.confirm){
+    try {
+      let token = await PasswordToken.findOne({ token: req.body.token });
+      let user = await User.findOne({ _id: token.user });
+      user.setPassword(req.body.password, (err) => {
+        if(err) {
+          res.status(400).send('Error occured while setting user password');
+        } else {
+          user.save();
+          res.send('Password has been set');
+        }
+      });
+    } catch(err) {
+      res.status(400).send('Error has occured while reseting password');
+    }
+  } else {
+    res.status(400).send('Passwords do not match');
+  }
+});
 
 module.exports = router;
