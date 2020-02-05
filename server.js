@@ -16,6 +16,7 @@ const LocalStrategy = require('passport-local');
 const passportJWT = require('passport-jwt');
 const JwtStrategy = passportJWT.Strategy;
 const ExtractJwt = passportJWT.ExtractJwt;
+const cors = require('cors');
 
 
 // CONFIGURATION INIT
@@ -32,6 +33,7 @@ mongoose.connect(`mongodb://localhost:27017/${system.db}`, {
 });
 
 // Settings
+app.use(cors());
 app.use(express.static(system.publicRoot));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
